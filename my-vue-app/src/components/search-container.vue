@@ -1,5 +1,6 @@
 <template>
   <div class="search-container">
+    niohao
     <el-row class="bn-row" type="flex" justify="end" v-if="dataSetting.length > 0">
       <el-button v-if="isReset" @click="onReset">重置</el-button>
       <el-button @click="onSearch" type="primary" plain>{{isPreview ? '预览' : '查询'}}</el-button>
@@ -42,7 +43,7 @@
           @change="e=>onChangeSelect(setting.key)"
         >
           <el-option
-            v-for="(option, optionIndex) in setting.options.list"
+            v-for="(option) in setting.options.list"
             :label="option[setting.options.label]"
             :value="option[setting.options.value]"
             :key="option[setting.options.value]"
@@ -252,7 +253,7 @@
     }
   }
 </script>
-<style scoped lang="scss">
+<style scoped >
  .search-container .filter-container .filter-item .two-row{
     width: 40%;
   }

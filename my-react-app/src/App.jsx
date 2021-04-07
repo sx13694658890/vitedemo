@@ -1,44 +1,36 @@
-import React, { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
-
+import React, { useState, createContext, useReducer, useEffect } from 'react'
+import Demo1 from "./components/demo1"
+export const myContext = createContext()
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [count, setcount] = useState(() => {
+    return {
+      name: "lisi"
+    }
+  })
+  const [state, dispatch] = useReducer((state, { type, payload }) => {
+    if (type == "good") {
+      console.log(payload)
+      return { ...state, name: payload.name }
+      return state
+    }
+    return state
+  }, count)
+  useEffect(() => {
+    dispatch({ type: "good", payload: count })
+  }, [count])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
+    <>
+      <myContext.Provider value={{ state, dispatch }}>
+        <Demo1 />
+      </myContext.Provider>
+      <p>{count.name}</p>
+      <button onClick={() => {
+        setcount({ name: "zhansdan" })
+      }}>按钮</button>
+      <button onClick={() => {
+        setcount({ name: "张三" })
+      }}>reducer</button>
+    </>
   )
 }
 
